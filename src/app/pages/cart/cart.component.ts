@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Cart, CartItem } from '../../models/cart.model';
+import { CartService } from '../../services/cart.service';
 
 @Component({
   selector: 'app-cart',
@@ -12,25 +13,42 @@ export class CartComponent implements OnInit {
       {
         product: 'https://via.placeholder.com/512',
         name: 'snickers',
-        price: 150,
-        quantity: 1,
+        price: 10,
+        quantity: 3,
         id: 1,
-      }
+      },
     ]
   };
 
   dataSource: Array<CartItem> = [];
-  displayedColumuns: Array<string> = [
+  displayedColumns: Array<string> = [
     'product',
     'name',
     'price',
     'quantity',
     'total',
     'action'
-
   ]
 
   ngOnInit() {
-    this.dataSource = this.cart.items;
+    this.cartService.cart.subscribe((_cart: Cart) => {
+      this.cart = _cart;
+      this.dataSource = this.cart.items;
+    });
+  }
+
+  // LocalStorage !
+
+  constructor(
+    private cartService: CartService
+  ) {
+  }
+
+  getTotalQuantity(el: CartItem): number {
+    return el.quantity * el.price;
+  }
+
+  getTotal(items: Array<CartItem>): number {
+    return this.cartService.getTotal(items);
   }
 }
