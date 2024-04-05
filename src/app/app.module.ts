@@ -25,7 +25,8 @@ import {CartComponent} from './pages/cart/cart.component';
 import {CartService} from './services/cart.service';
 import {FormsModule} from '@angular/forms';
 import {StoreService} from "./services/store.service";
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
+import {ApiBaseUrlInterceptor} from "./interceptors/api-base-url.interceptor";
 
 @NgModule({
   declarations: [
@@ -56,7 +57,15 @@ import {HttpClientModule} from "@angular/common/http";
     MatSnackBarModule,
     HttpClientModule,
   ],
-  providers: [CartService, StoreService],
+  providers: [
+    CartService,
+    StoreService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ApiBaseUrlInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
