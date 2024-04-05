@@ -1,14 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { Cart } from './models/cart.model';
-import { CartService } from './services/cart.service';
+import {Component, OnInit} from '@angular/core';
+import {Cart} from './models/cart.model';
+import {CartService} from './services/cart.service';
 
 @Component({
   selector: 'app-root',
   styleUrl: './app.component.css',
   template:
     `
-        <app-header [cart]="cart"></app-header>
-        <router-outlet></router-outlet>
+      <app-header [cart]="cart"></app-header>
+      <router-outlet></router-outlet>
     `
 })
 export class AppComponent implements OnInit {
